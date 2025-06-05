@@ -1,5 +1,5 @@
 import csv
-from itertools import combinations
+import itertools
 
 
 def generate_list():
@@ -8,6 +8,18 @@ def generate_list():
 
 def generate_guess_list():
     with open("dict", "r") as file:
+        return [line.strip() for line in file]
+
+def generate_guess_list_sizes():
+    with open("dict_sizes", "r") as file:
+        return [line.strip() for line in file]
+
+def generate_guess_dict_sizes():
+    with open("dict", "r") as f1, open("dict_sizes", "r") as f2:
+        return {line1.strip(): int(line2.strip()) for line1, line2 in zip(f1, f2)}
+
+def generate_second_guess_list():
+    with open("best_second_guesses", "r") as file:
         return [line.strip() for line in file]
 
 #filters the word list for words that include the letter
@@ -83,8 +95,13 @@ def filter_list(remaining_words, guess, word):
 def add_row_numbers(data):
     return [[row, i] for i, row in enumerate(data, start=1)]
 
-def conflate_guesses(nested_list):
-    return [a & b for a, b in zip(nested_list[0], nested_list[1])]
+def conflate_guesses(list1, list2):
+    return [a & b for a, b in zip(list1, list2)]
 
 def sum_bits(n):
     return sum(int(bit) for bit in bin(n)[2:])
+
+def chunk_combinations(iterable, size):
+    iterator = iter(iterable)
+    while chunk := list(itertools.islice(iterator, size)):
+        yield chunk
