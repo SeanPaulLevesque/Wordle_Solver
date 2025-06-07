@@ -17,8 +17,8 @@ def check_guess(guess):
 
         remaining_words_bits.append((sum([2 ** num[1] for num in remaining_words])))
 
-        with open("guess_data/" + guess + ".pkl", "wb") as f:
-            pickle.dump(remaining_words_bits, f)
+    with open("guess_data/" + guess + ".pkl", "wb") as f:
+        pickle.dump(remaining_words_bits, f)
 
     return
 
